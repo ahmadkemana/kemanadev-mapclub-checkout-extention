@@ -6,7 +6,7 @@
 api_version = "2025-07"
 
 [[extensions]]
-name = "mapclub-block"
+name = "Mapclub Block"
 handle = "mapclub-block"
 type = "ui_extension"
 uid = "8c90d617-094d-8754-6dd2-9b5c1a17d84cc19e290d"
