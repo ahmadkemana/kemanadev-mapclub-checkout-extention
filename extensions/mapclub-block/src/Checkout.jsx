@@ -21,7 +21,32 @@ function Extension() {
   
   // Only show the block if customer is logged in
   if (!customer) { 
-    return null;
+    return (
+       <BlockStack
+      padding={['base', 'base', 'base', 'base']}
+      background="subdued"
+      cornerRadius="base"
+      border={['base', 'solid', 'base']}
+      spacing="tight"
+    >
+      {/* Header with icon and MAPCLUB text */}
+      <InlineStack spacing="tight" blockAlignment="center">
+        <Icon
+          source="info"
+          size="small"
+        />
+        <Text size="medium" emphasis="bold">
+          MAPCLUB
+        </Text>
+      </InlineStack>
+      {/* Account management link */}
+      <BlockStack spacing="extraTight">
+      <Text size="small" appearance="subdued">
+        Sign in to use your MAPCLUB points.
+      </Text>
+      </BlockStack>
+    </BlockStack>
+    );
   }
 
   // Extract customer information
@@ -64,11 +89,24 @@ function Extension() {
       {/* Account management link */}
       <BlockStack spacing="extraTight">
         <Text size="small" appearance="subdued">
-          Change the MAPCLUB Account if it isn't yours
-        </Text>
+        {customer?.metafields?.custom?.mapclub_member_code !== ""
+          ? "Change the MAPCLUB Account if it isn't yours"
+          : "Link your MAPCLUB account and receive a bonus point when you check out this product!"}
+      </Text>
         <Text size="small" appearance="subdued">
-          Unlink? <Link to="/account/login" external>Click here</Link>
-        </Text>
+        {customer?.metafields?.custom?.mapclub_member_code !== "" ? (
+          <>
+            Unlink?{" "}
+            <Link url="/account/login" external>
+              Click here
+            </Link>
+          </>
+        ) : (
+          <Link url="/account" external>
+            Click here
+          </Link>
+        )}
+      </Text>
       </BlockStack>
     </BlockStack>
   );
