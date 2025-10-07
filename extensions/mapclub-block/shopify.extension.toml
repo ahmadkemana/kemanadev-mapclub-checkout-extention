@@ -12,15 +12,20 @@ type = "ui_extension"
 uid = "8c90d617-094d-8754-6dd2-9b5c1a17d84cc19e290d"
 
 # Controls where in Shopify your extension will be injected,
-# and the file that contains your extension’s source code. Learn more:
+# and the file that contains your extension's source code. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/extension-targets-overview
 
 [[extensions.targeting]]
 module = "./src/Checkout.jsx"
 target = "purchase.checkout.block.render"
 
+# Request access to customer metafields
+[[extensions.metafields]]
+namespace = "custom"
+key = "mapclub_member_code"
+
 [extensions.capabilities]
-# Gives your extension access to directly query Shopify’s storefront API.
+# Gives your extension access to directly query Shopify's storefront API.
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#api-access
 api_access = true
 
@@ -29,24 +34,17 @@ api_access = true
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#network-access
 # network_access = true
 
-# Loads metafields on checkout resources, including the cart,
-# products, customers, and more. Learn more:
-# https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#metafields
-
-# [[extensions.metafields]]
-# namespace = "my_namespace"
-# key = "my_key"
-# [[extensions.metafields]]
-# namespace = "my_namespace"
-# key = "my_other_key"
-
 # Defines settings that will be collected from merchants installing
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#settings-definition
 
-# [extensions.settings]
-# [[extensions.settings.fields]]
-# key = "banner_title"
-# type = "single_line_text_field"
-# name = "Banner title"
-# description = "Enter a title for the banner"
+[extensions.settings]
+  [[extensions.settings.fields]]
+  key = "shop_domain"
+  type = "single_line_text_field"
+  name = "Shop Domain"
+  
+  [[extensions.settings.fields]]
+  key = "storefront_token"
+  type = "single_line_text_field"
+  name = "Storefront Access Token"
