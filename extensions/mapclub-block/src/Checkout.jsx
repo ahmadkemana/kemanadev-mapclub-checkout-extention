@@ -7,6 +7,8 @@ import {
   Link,
   Icon,
   useAppMetafields,
+  useApi,
+  useShop
 } from "@shopify/ui-extensions-react/checkout";
 
 export default reactExtension("purchase.checkout.block.render", () => (
@@ -14,6 +16,10 @@ export default reactExtension("purchase.checkout.block.render", () => (
 ));
 
 function Extension() {
+  const {api} = useApi();
+  const shop = useShop();
+  const accountPageLoginURL = `https://${shop.myshopifyDomain}/account/login`;
+  const accountPageURL = `https://${shop.myshopifyDomain}/account`;
   const customer = useCustomer();
   const appMetafields = useAppMetafields()
   const customerMetafield = appMetafields.find(
@@ -24,12 +30,8 @@ function Extension() {
 );;
   // 🎉 Access the metafield directly - no API calls needed!
   const memberCode = customerMetafield?.metafield?.value;
-  
-  // Debug logging
-  console.log('Customer:', customer);
-  console.log('All metafields:', customerMetafield , customerMetafield?.metafield?.value);
-  console.log('Member code:', memberCode);
-
+   
+  console.log('appMetafields' , appMetafields)
   // Show sign-in message if customer is not logged in
   if (!customer) { 
     return (
@@ -94,12 +96,12 @@ function Extension() {
           {memberCode && memberCode !== "" ? (
             <>
               Unlink?{" "}
-              <Link url="/account/login" external>
+              <Link to={accountPageLoginURL} >
                 Click here
               </Link>
             </>
           ) : (
-            <Link url="/account" external>
+            <Link to={accountPageURL}>
               Click here
             </Link>
           )}
